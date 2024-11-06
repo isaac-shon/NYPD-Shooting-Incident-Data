@@ -61,7 +61,7 @@ dashboardPage(
                      tabPanel(title = "Number of Incidents Over Time", plotlyOutput("line_plot")),
                      tabPanel(title = "Location Type of Incident", plotlyOutput("bar1")),
                      tabPanel(title = "Victim Age Group", plotlyOutput("bar2")),
-                     tabPanel(title = "Victim Sex", h4("tabpanel 4 placeholder")),
+                     tabPanel(title = "Time of Day for Each Incident", plotlyOutput("histogram")),
                      tabPanel(title = "Suspect Age Group", h4("tabpanel 5 placeholder"))
                     )
               ),

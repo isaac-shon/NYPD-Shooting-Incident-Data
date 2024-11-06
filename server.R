@@ -27,11 +27,12 @@ function(input, output, session){
            y = "Number of Incidents") +
       theme_minimal()
   })
-  
     
   # Histogram of Data:
   output$histogram <- renderPlotly({
-    data <- histdata[seq_len(input$slider)]
-    hist(data)
+    ggplot(df, aes(x = occur_time)) + 
+      geom_histogram(binwidth = 3600, color = "black", fill = "steelblue") + 
+      labs(title = "Distribution of Incident Times", x = "Time of Day", y = "Frequency") + 
+      theme_minimal()
   })
 }

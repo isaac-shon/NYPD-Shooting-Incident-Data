@@ -3,6 +3,7 @@
 #install.packages("shiny")
 #install.packages("DT")
 #install.packages("forecast")
+#install.packages("hms")
 library(httr)
 library(jsonlite)
 library(shiny)
@@ -13,6 +14,7 @@ library(dplyr)
 library(lubridate)
 library(stringr)
 library(forecast)
+library(hms)
 #-------------------------------------------------------------------------------#
 # Retrieve Incident-Level Data from NYC Open Data API
 url <- "https://data.cityofnewyork.us/resource/833y-fsy8.json?$limit=50000"
@@ -60,7 +62,8 @@ victim_age_group <- df %>%
   summarise(incidents = n())
 
 #-------------------------------------------------------------------------------#
-
+# Convert occur_time to HMS format:
+df$occur_time <- as_hms(df$occur_time)
 
 
 
