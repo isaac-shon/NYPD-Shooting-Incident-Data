@@ -84,21 +84,22 @@ dashboardPage(
                                  street (1,886 incidents between 2006-2023). Among indoor shooting incidents, most of them took place inside of
                                  housing or dwelling units:"),
                               plotlyOutput("bar1")),
-                     tabPanel(title = "Victim Characteristics", 
-                              h5("We now take a deeper look at the victims of these incidents. In the first bar plot
-                                 we can see that the majority of shooting victims (who either survived or were murdered)
-                                 were between the ages 18-44. However, more concerning is that outside of this age range,
-                                 the second largest set of victims of gun violence were minors."),
-                              plotlyOutput("bar2"),
-                              h5("Another unfortunate fact that arises is that a majority of gun violence victims were
-                                 black and hispanic residents. In particular, a sizeable majority of victims were
-                                 either black or black hispanic residents:"),
-                              plotlyOutput("bar3"))
+                     tabPanel(title = "Victim Race", 
+                              h5("We now take a deeper look at the victims of these incidents. One unfortunate fact that arises is that a 
+                              majority of gun violence victims ub New York City were black and hispanic residents. In particular, a sizeable
+                              majority of victims were either black or black hispanic residents:"),
+                              plotlyOutput("bar2")),
+                     tabPanel(title = "Victim Age Group",
+                              h5("We can see that the majority of shooting victims (who either survived or were murdered)
+                              were between the ages 18-44. However, more concerning is that outside of this age range,
+                              the second largest set of victims of gun violence were minors. "),
+                              selectInput("victim_race", "Select Race:", choices = unique(df$vic_race), selected = unique(df$vic_race)[1]),
+                              plotlyOutput("ageGroupPlot", height = 400))
                     )
               ),
       tabItem(tabName = "map",
               tabBox(id = "t2", width = 12,
-                     tabPanel(title = "Location of Incidents", leafletOutput("incidentMap", height = 600))
+                     tabPanel(title = "Incident Heatmap", leafletOutput("incidentMap", height = 600))
               )
       )
     )

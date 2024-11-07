@@ -20,19 +20,28 @@ function(input, output, session){
   })
   
   output$bar2 <- renderPlotly({
-    ggplot(victim_age_group, aes(x = vic_age_group, y = incidents)) +
-      geom_bar(stat = "identity", fill = "steelblue") +
-      labs(title = "Incident Count by Victim Age Group",
-           x = "Victim Age Group",
-           y = "Number of Incidents") +
-      theme_minimal()
-  })
-  
-  output$bar3 <- renderPlotly({
     ggplot(victim_race, aes(x = reorder(vic_race, -incidents), y = incidents)) +
       geom_bar(stat = "identity", fill = "steelblue") +
       labs(title = "Incident Count by Victim Race",
            x = "Victim Race",
+           y = "Number of Incidents") +
+      theme_minimal()
+  })
+  
+  filteredData <- reactive({ 
+    df %>% mutate(vic_age_group = ifelse(vic_age_group == "(null)", "UNKNOWN", vic_age_group)) %>% 
+      filter(vic_age_group != "1022") %>% 
+      filter(vic_race == input$victim_race) %>% 
+      group_by(vic_age_group) %>% 
+      summarise(incidents = n())
+    })
+  
+  output$ageGroupPlot <- renderPlotly({
+    filteredData() %>% 
+      ggplot(aes(x = vic_age_group, y = incidents)) +
+      geom_bar(stat = "identity", fill = "steelblue") +
+      labs(title = "Incident Count by Victim Age Group",
+           x = "Victim Age Group",
            y = "Number of Incidents") +
       theme_minimal()
   })
@@ -47,8 +56,9 @@ function(input, output, session){
   
   # Map of Data:
   output$incidentMap <- renderLeaflet({
-    leaflet(data = df) %>%
+    df %>% filter(!is.na(latitude)) %>% leaflet() %>%
       addProviderTiles(providers$CartoDB.Positron) %>%
-      addMarkers(~longitude, ~latitude, clusterOptions = markerClusterOptions() ) 
+      addHeatmap(lng = ~longitude, lat = ~latitude, blur = 5, max = 1, radius = 15) 
   })
+
 }

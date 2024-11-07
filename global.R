@@ -5,6 +5,7 @@
 #install.packages("forecast")
 #install.packages("hms")
 #install.packages("leaflet")
+#install.packages("leaflet.extras")
 library(httr)
 library(jsonlite)
 library(shiny)
@@ -17,6 +18,7 @@ library(stringr)
 library(forecast)
 library(hms)
 library(leaflet)
+library(leaflet.extras)
 #-------------------------------------------------------------------------------#
 # Retrieve Incident-Level Data from NYC Open Data API
 url <- "https://data.cityofnewyork.us/resource/833y-fsy8.json?$limit=50000"
@@ -57,11 +59,11 @@ location_type <- df %>% filter(loc_classfctn_desc != "(null)") %>%
 #-------------------------------------------------------------------------------#
 # Breakdown of Victim Age Group:
 
-victim_age_group <- df %>% 
-  mutate(vic_age_group = ifelse(vic_age_group == "(null)", "UNKNOWN", vic_age_group)) %>% 
-  filter(vic_age_group != "1022") %>% 
-  group_by(vic_age_group) %>% 
-  summarise(incidents = n())
+# victim_age_group <- df %>% 
+#   mutate(vic_age_group = ifelse(vic_age_group == "(null)", "UNKNOWN", vic_age_group)) %>% 
+#   filter(vic_age_group != "1022") %>% 
+#   group_by(vic_age_group) %>% 
+#   summarise(incidents = n())
 
 # Victim Race:
 victim_race <- df %>% 
@@ -78,4 +80,8 @@ df$latitude <- as.numeric(df$latitude)
 df$longitude <- as.numeric(df$longitude)
 
 
-
+df %>% mutate(vic_age_group = ifelse(vic_age_group == "(null)", "UNKNOWN", vic_age_group)) %>% 
+  filter(vic_age_group != "1022") %>% 
+  filter(vic_race == "WHITE") %>% 
+  group_by(vic_age_group) %>% 
+  summarise(incidents = n())
