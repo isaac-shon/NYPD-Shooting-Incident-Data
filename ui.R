@@ -93,13 +93,21 @@ dashboardPage(
                               h5("We can see that the majority of shooting victims (who either survived or were murdered)
                               were between the ages 18-44. However, more concerning is that outside of this age range,
                               the second largest set of victims of gun violence were minors. "),
-                              selectInput("victim_race", "Select Race:", choices = unique(df$vic_race), selected = unique(df$vic_race)[1]),
+                              selectInput("victim_race", "Select Race:", 
+                                          choices = unique(df$vic_race), 
+                                          selected = unique(df$vic_race)[1]),
                               plotlyOutput("ageGroupPlot", height = 400))
                     )
               ),
       tabItem(tabName = "map",
               tabBox(id = "t2", width = 12,
-                     tabPanel(title = "Incident Heatmap", leafletOutput("incidentMap", height = 600))
+                     tabPanel(title = "Incident Heatmap", leafletOutput("incidentMap", height = 600)),
+                     tabPanel(title = "Murders/Non-Murders", 
+                              selectInput("Murder_Incident", "Murder Incident:", 
+                                          choices = unique(df$statistical_murder_flag), 
+                                          selected = unique(df$statistical_murder_flag)[1]),
+                              leafletOutput("MurderPlot", height = 400)
+                              ),
               )
       )
     )

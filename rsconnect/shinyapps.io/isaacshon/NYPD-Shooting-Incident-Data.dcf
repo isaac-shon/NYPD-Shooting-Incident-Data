@@ -1,0 +1,13 @@
+name: NYPD-Shooting-Incident-Data
+title: NYPD-Shooting-Incident-Data
+username:
+account: isaacshon
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 13268026
+bundleId: 9330622
+url: https://isaacshon.shinyapps.io/NYPD-Shooting-Incident-Data/
+when: 1731008656.24753
+lastSyncTime: 1731008656.24754
+asMultiple: FALSE
+asStatic: FALSE

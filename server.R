@@ -60,5 +60,30 @@ function(input, output, session){
       addProviderTiles(providers$CartoDB.Positron) %>%
       addHeatmap(lng = ~longitude, lat = ~latitude, blur = 5, max = 1, radius = 15) 
   })
+  
+  # Map of Murders:
+  filteredMurderData <- reactive({ 
+    df %>% filter(statistical_murder_flag == as.logical(input$Murder_Incident)) %>% 
+      filter(!is.na(latitude))
+  })
+  
+  
+  output$MurderPlot <- renderLeaflet({
+    marker_color <- if (input$Murder_Incident == TRUE) {
+      "red"   
+    } else {
+      "green"
+    }
+    
+    filteredMurderData()  %>%
+      leaflet() %>%
+      addProviderTiles(providers$CartoDB.Positron) %>%
+      addCircleMarkers(lng = ~longitude, lat = ~latitude, 
+                       radius = 1,
+                       color = marker_color,
+                       fillColor = marker_color,
+                       fillOpacity = 0.3, 
+                       stroke = FALSE) 
+  })
 
 }

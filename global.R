@@ -1,11 +1,12 @@
-#install.packages("httr")
-#install.packages("jsonlite")
-#install.packages("shiny")
-#install.packages("DT")
-#install.packages("forecast")
-#install.packages("hms")
-#install.packages("leaflet")
-#install.packages("leaflet.extras")
+# install.packages("httr")
+# install.packages("jsonlite")
+# install.packages("shiny")
+# install.packages("DT")
+# install.packages("forecast")
+# install.packages("hms")
+# install.packages("leaflet")
+# install.packages("leaflet.extras")
+# install.packages('rsconnect')
 library(httr)
 library(jsonlite)
 library(shiny)
@@ -19,6 +20,7 @@ library(forecast)
 library(hms)
 library(leaflet)
 library(leaflet.extras)
+library(rsconnect)
 #-------------------------------------------------------------------------------#
 # Retrieve Incident-Level Data from NYC Open Data API
 url <- "https://data.cityofnewyork.us/resource/833y-fsy8.json?$limit=50000"
@@ -70,4 +72,14 @@ df$occur_time <- as_hms(df$occur_time)
 # Convert latitude and longitude to numeric:
 df$latitude <- as.numeric(df$latitude)
 df$longitude <- as.numeric(df$longitude)
-
+#-------------------------------------------------------------------------------#
+df %>% filter(!is.na(latitude)) %>%
+  filter(statistical_murder_flag == TRUE) %>% 
+  leaflet() %>%
+  addProviderTiles(providers$CartoDB.Positron) %>%
+  addCircleMarkers(lng = ~longitude, lat = ~latitude, 
+                   radius = 1,
+                   color = "blue",
+                   fillColor = "blue",
+                   fillOpacity = 0.3, 
+                   stroke = FALSE) 
