@@ -5,7 +5,7 @@ library(plotly)
 
 dashboardPage(
   skin = "black",
-  dashboardHeader(title = "Shooting Incidents in New York City in R and Shiny", titleWidth = 600,
+  dashboardHeader(title = "Shooting Incidents in New York City", titleWidth = 600,
             
                   tags$li(class="dropdown",tags$a(href="https://github.com/isaac-shon", icon("github"), "GitHub", target="_blank"))
                   
@@ -58,7 +58,14 @@ dashboardPage(
               ),
       tabItem(tabName = "viz",
               tabBox(id = "t2", width = 12,
-                     tabPanel(title = "Number of Incidents Over Time", plotlyOutput("line_plot")),
+                     tabPanel(title = "Number of Incidents Over Time",
+                              h5("In this series of line plots, we have monthly shooting incidents reported by 
+                              the New York Police Department from 2006 to the end of 2023. The raw times series 
+                              data (shown by the top panel) is broken down into seasonal, trend and irregular 
+                              components using LOESS. In the second panel, we show the overall trend in shooting 
+                              incidents. We can see that while there has been a gradual decrease over time in 
+                              monthly incidents, there appears to be a sharp increase in shootings in 2020."),
+                              plotlyOutput("line_plot")),
                      tabPanel(title = "Location Type of Incident", plotlyOutput("bar1")),
                      tabPanel(title = "Victim Age Group", plotlyOutput("bar2")),
                      tabPanel(title = "Time of Day for Each Incident", plotlyOutput("histogram")),

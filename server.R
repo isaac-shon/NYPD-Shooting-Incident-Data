@@ -31,7 +31,7 @@ function(input, output, session){
   # Histogram of Data:
   output$histogram <- renderPlotly({
     ggplot(df, aes(x = occur_time)) + 
-      geom_histogram(binwidth = 3600, color = "black", fill = "steelblue") + 
+      geom_histogram(binwidth = 1800, color = "black", fill = "steelblue") + 
       labs(title = "Distribution of Incident Times", x = "Time of Day", y = "Frequency") + 
       theme_minimal()
   })
