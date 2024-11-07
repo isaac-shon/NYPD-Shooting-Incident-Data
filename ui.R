@@ -70,12 +70,30 @@ dashboardPage(
                               data (shown by the top panel) is broken down into seasonal, trend and irregular 
                               components using LOESS. In the second panel, we show the overall trend in shooting 
                               incidents. We can see that while there has been a gradual decrease over time in 
-                              monthly incidents, there appears to be a sharp increase in shootings in 2020."),
+                              monthly incidents, there appears to be a sharp increase in shootings in 2020:"),
                               plotlyOutput("line_plot")),
-                     tabPanel(title = "Location Type of Incident", plotlyOutput("bar1")),
-                     tabPanel(title = "Victim Characteristics", plotlyOutput("bar2"),plotlyOutput("bar3")),
-                     tabPanel(title = "Time of Day for Each Incident", plotlyOutput("histogram"))
-                     
+                     tabPanel(title = "Time of Day for Each Incident", 
+                              h5("Instead of looking at the overall time series trend in our data, let us now take
+                                 a closer look at what time of day shooting incidents have tended to occur. From 
+                                 our histogram below, we can see pretty strong evidence that there is a 'seasonal'
+                                 trend in the sense that most incidents take place during the night, rather than
+                                 in the middle of the day:"),
+                              plotlyOutput("histogram")),
+                     tabPanel(title = "Location Type of Incident",
+                              h5("Here, we can see that the vast majority of incidents since 2006 took place on
+                                 street (1,886 incidents between 2006-2023). Among indoor shooting incidents, most of them took place inside of
+                                 housing or dwelling units:"),
+                              plotlyOutput("bar1")),
+                     tabPanel(title = "Victim Characteristics", 
+                              h5("We now take a deeper look at the victims of these incidents. In the first bar plot
+                                 we can see that the majority of shooting victims (who either survived or were murdered)
+                                 were between the ages 18-44. However, more concerning is that outside of this age range,
+                                 the second largest set of victims of gun violence were minors."),
+                              plotlyOutput("bar2"),
+                              h5("Another unfortunate fact that arises is that a majority of gun violence victims were
+                                 black and hispanic residents. In particular, a sizeable majority of victims were
+                                 either black or black hispanic residents:"),
+                              plotlyOutput("bar3"))
                     )
               ),
       tabItem(tabName = "map",
