@@ -73,4 +73,3 @@ df$occur_time <- as_hms(df$occur_time)
 df$latitude <- as.numeric(df$latitude)
 df$longitude <- as.numeric(df$longitude)
 #-------------------------------------------------------------------------------#
-
