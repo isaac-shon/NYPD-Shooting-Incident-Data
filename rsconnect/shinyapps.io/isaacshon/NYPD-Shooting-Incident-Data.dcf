@@ -5,9 +5,9 @@ account: isaacshon
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 13268026
-bundleId: 9330622
+bundleId: 9330749
 url: https://isaacshon.shinyapps.io/NYPD-Shooting-Incident-Data/
-when: 1731008656.24753
-lastSyncTime: 1731008656.24754
+when: 1731010853.93088
+lastSyncTime: 1731010853.93089
 asMultiple: FALSE
 asStatic: FALSE

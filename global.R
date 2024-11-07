@@ -73,13 +73,4 @@ df$occur_time <- as_hms(df$occur_time)
 df$latitude <- as.numeric(df$latitude)
 df$longitude <- as.numeric(df$longitude)
 #-------------------------------------------------------------------------------#
-df %>% filter(!is.na(latitude)) %>%
-  filter(statistical_murder_flag == TRUE) %>% 
-  leaflet() %>%
-  addProviderTiles(providers$CartoDB.Positron) %>%
-  addCircleMarkers(lng = ~longitude, lat = ~latitude, 
-                   radius = 1,
-                   color = "blue",
-                   fillColor = "blue",
-                   fillOpacity = 0.3, 
-                   stroke = FALSE) 
+
