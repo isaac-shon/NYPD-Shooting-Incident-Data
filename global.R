@@ -4,6 +4,7 @@
 #install.packages("DT")
 #install.packages("forecast")
 #install.packages("hms")
+#install.packages("leaflet")
 library(httr)
 library(jsonlite)
 library(shiny)
@@ -15,6 +16,7 @@ library(lubridate)
 library(stringr)
 library(forecast)
 library(hms)
+library(leaflet)
 #-------------------------------------------------------------------------------#
 # Retrieve Incident-Level Data from NYC Open Data API
 url <- "https://data.cityofnewyork.us/resource/833y-fsy8.json?$limit=50000"
@@ -71,6 +73,9 @@ victim_race <- df %>%
 df$occur_time <- as_hms(df$occur_time)
 
 #-------------------------------------------------------------------------------#
+# Convert latitude and longitude to numeric:
+df$latitude <- as.numeric(df$latitude)
+df$longitude <- as.numeric(df$longitude)
 
 
 

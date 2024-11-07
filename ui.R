@@ -98,7 +98,7 @@ dashboardPage(
               ),
       tabItem(tabName = "map",
               tabBox(id = "t2", width = 12,
-                     tabPanel(title = "Location of Incidents", h4("tabpanel 1 placeholder"))
+                     tabPanel(title = "Location of Incidents", leafletOutput("incidentMap", height = 600))
               )
       )
     )

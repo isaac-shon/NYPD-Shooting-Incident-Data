@@ -44,4 +44,11 @@ function(input, output, session){
       labs(title = "Distribution of Incident Times", x = "Time of Day", y = "Frequency") + 
       theme_minimal()
   })
+  
+  # Map of Data:
+  output$incidentMap <- renderLeaflet({
+    leaflet(data = df) %>%
+      addProviderTiles(providers$CartoDB.Positron) %>%
+      addMarkers(~longitude, ~latitude, clusterOptions = markerClusterOptions() ) 
+  })
 }
