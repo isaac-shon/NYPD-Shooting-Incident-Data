@@ -7,7 +7,7 @@ dashboardPage(
   skin = "black",
   dashboardHeader(title = "Shooting Incidents in New York City", titleWidth = 600,
             
-                  tags$li(class="dropdown",tags$a(href="https://github.com/isaac-shon", icon("github"), "GitHub", target="_blank"))
+                  tags$li(class="dropdown",tags$a(href="https://github.com/isaac-shon/NYPD-Shooting-Incident-Data", icon("github"), "GitHub", target="_blank"))
                   
                   ),
   
@@ -66,7 +66,7 @@ dashboardPage(
               tabBox(id = "t2", width = 12,
                      tabPanel(title = "Number of Incidents Over Time",
                               h5("In this series of line plots, we have monthly shooting incidents reported by 
-                              the New York Police Department from 2006 to the end of 2023. The raw times series 
+                              the New York Police Department since 2006. The raw times series 
                               data (shown by the top panel) is broken down into seasonal, trend and irregular 
                               components using LOESS. In the second panel, we show the overall trend in shooting 
                               incidents. We can see that while there has been a gradual decrease over time in 
@@ -80,33 +80,45 @@ dashboardPage(
                                  in the middle of the day:"),
                               plotlyOutput("histogram")),
                      tabPanel(title = "Location Type of Incident",
+                              h5("Most gun violence incidents that have taken place in New York City since 2006 were
+                                 in Brooklyn and in the Bronx. We will see this later in the Mapping section, but the
+                                 following plot shows where most of the reported incidents tend to occur:"),
+                              plotlyOutput("borough", height = 300),
                               h5("Here, we can see that the vast majority of incidents since 2006 took place on
                                  street (1,886 incidents between 2006-2023). Among indoor shooting incidents, most of them took place inside of
                                  housing or dwelling units:"),
-                              plotlyOutput("bar1")),
+                              plotlyOutput("location", height = 300)),
                      tabPanel(title = "Victim Race", 
                               h5("We now take a deeper look at the victims of these incidents. One unfortunate fact that arises is that a 
-                              majority of gun violence victims ub New York City were black and hispanic residents. In particular, a sizeable
-                              majority of victims were either black or black hispanic residents:"),
-                              plotlyOutput("bar2")),
-                     tabPanel(title = "Victim Age Group",
+                              majority of gun violence victims in New York City were black and hispanic residents:"),
+                              plotlyOutput("race", height = 300),
                               h5("We can see that the majority of shooting victims (who either survived or were murdered)
                               were between the ages 18-44. However, more concerning is that outside of this age range,
                               the second largest set of victims of gun violence were minors. "),
                               selectInput("victim_race", "Select Race:", 
                                           choices = unique(df$vic_race), 
                                           selected = unique(df$vic_race)[1]),
-                              plotlyOutput("ageGroupPlot", height = 400))
+                              plotlyOutput("ageGroupPlot", height = 300))
+                              
                     )
               ),
       tabItem(tabName = "map",
               tabBox(id = "t2", width = 12,
                      tabPanel(title = "Incident Heatmap", leafletOutput("incidentMap", height = 600)),
                      tabPanel(title = "Murders/Non-Murders", 
-                              selectInput("Murder_Incident", "Murder Incident:", 
-                                          choices = unique(df$statistical_murder_flag), 
-                                          selected = unique(df$statistical_murder_flag)[1]),
-                              leafletOutput("MurderPlot", height = 400)
+                              fluidRow(
+                                column(6,
+                                       selectInput("Murder_Incident", "Murder Incident:", 
+                                                   choices = unique(df$statistical_murder_flag), 
+                                                   selected = unique(df$statistical_murder_flag)[1])
+                                ),
+                                column(6,
+                                       selectInput("Year_Incident", "Year:", 
+                                                   choices = unique(df$year), 
+                                                   selected = unique(df$year)[1])
+                                )
+                              ),
+                              leafletOutput("MurderPlot", height = 600)
                               ),
               )
       )

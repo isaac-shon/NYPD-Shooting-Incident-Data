@@ -10,7 +10,17 @@ function(input, output, session){
   })
   
   # Barplots of Data:
-  output$bar1 <- renderPlotly({
+  
+  output$borough <- renderPlotly({
+    ggplot(borough_incidents, aes(x = reorder(boro, -incidents), y = incidents)) +
+      geom_bar(stat = "identity", fill = "steelblue") +
+      labs(title = "Incident Count by Borough",
+           x = "Borough",
+           y = "Number of Incidents") +
+      theme_minimal()
+  })
+  
+  output$location <- renderPlotly({
     ggplot(location_type, aes(x = reorder(loc_classfctn_desc, -incidents), y = incidents)) +
       geom_bar(stat = "identity", fill = "steelblue") +
       labs(title = "Incident Count by Location Classification",
@@ -19,7 +29,8 @@ function(input, output, session){
       theme_minimal()
   })
   
-  output$bar2 <- renderPlotly({
+  
+  output$race <- renderPlotly({
     ggplot(victim_race, aes(x = reorder(vic_race, -incidents), y = incidents)) +
       geom_bar(stat = "identity", fill = "steelblue") +
       labs(title = "Incident Count by Victim Race",
@@ -56,14 +67,20 @@ function(input, output, session){
   
   # Map of Data:
   output$incidentMap <- renderLeaflet({
-    df %>% filter(!is.na(latitude)) %>% leaflet() %>%
+    df %>% filter(!is.na(latitude)) %>% 
+      leaflet(options = leafletOptions(zoomControl = FALSE)) %>%
+      htmlwidgets::onRender("function(el, x) {
+        L.control.zoom({ position: 'topright' }).addTo(this)
+    }") %>% 
       addProviderTiles(providers$CartoDB.Positron) %>%
       addHeatmap(lng = ~longitude, lat = ~latitude, blur = 5, max = 1, radius = 15) 
   })
   
   # Map of Murders:
   filteredMurderData <- reactive({ 
-    df %>% filter(statistical_murder_flag == as.logical(input$Murder_Incident)) %>% 
+    df %>% 
+      filter(year == as.numeric(input$Year_Incident)) %>% 
+      filter(statistical_murder_flag == as.logical(input$Murder_Incident)) %>% 
       filter(!is.na(latitude))
   })
   
@@ -76,14 +93,17 @@ function(input, output, session){
     }
     
     filteredMurderData()  %>%
-      leaflet() %>%
+      leaflet(options = leafletOptions(zoomControl = FALSE)) %>%
+      htmlwidgets::onRender("function(el, x) {
+        L.control.zoom({ position: 'topright' }).addTo(this)
+    }") %>% 
       addProviderTiles(providers$CartoDB.Positron) %>%
       addCircleMarkers(lng = ~longitude, lat = ~latitude, 
-                       radius = 1,
+                       radius = 2,
                        color = marker_color,
                        fillColor = marker_color,
                        fillOpacity = 0.3, 
-                       stroke = FALSE) 
+                       stroke = FALSE)
   })
 
 }

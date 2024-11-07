@@ -38,6 +38,17 @@ if (status_code(response) == 200) {
 
 df$occur_date <- str_sub(df$occur_date, 1, 10)
 df$occur_date <- as.Date(df$occur_date, format = "%Y-%m-%d")
+
+# Convert occur_time to HMS format:
+df$occur_time <- as_hms(df$occur_time)
+
+# Convert latitude and longitude to numeric:
+df$latitude <- as.numeric(df$latitude)
+df$longitude <- as.numeric(df$longitude)
+
+# Create Year Variable
+df$year <- year(df$occur_date)
+  
 #-------------------------------------------------------------------------------#
 # Number of incidents over time:
 
@@ -58,6 +69,11 @@ location_type <- df %>% filter(loc_classfctn_desc != "(null)") %>%
   group_by(loc_classfctn_desc) %>% 
   summarise(incidents = n())
 
+# Breakdown by Borough:
+borough_incidents <- df %>% 
+  group_by(boro) %>% 
+  summarise(incidents = n())
+
 #-------------------------------------------------------------------------------#
 # Breakdown of Victim Race:
 victim_race <- df %>% 
@@ -65,11 +81,4 @@ victim_race <- df %>%
   summarise(incidents = n())
 
 #-------------------------------------------------------------------------------#
-# Convert occur_time to HMS format:
-df$occur_time <- as_hms(df$occur_time)
 
-#-------------------------------------------------------------------------------#
-# Convert latitude and longitude to numeric:
-df$latitude <- as.numeric(df$latitude)
-df$longitude <- as.numeric(df$longitude)
-#-------------------------------------------------------------------------------#
