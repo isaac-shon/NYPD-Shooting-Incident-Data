@@ -57,15 +57,7 @@ location_type <- df %>% filter(loc_classfctn_desc != "(null)") %>%
   summarise(incidents = n())
 
 #-------------------------------------------------------------------------------#
-# Breakdown of Victim Age Group:
-
-# victim_age_group <- df %>% 
-#   mutate(vic_age_group = ifelse(vic_age_group == "(null)", "UNKNOWN", vic_age_group)) %>% 
-#   filter(vic_age_group != "1022") %>% 
-#   group_by(vic_age_group) %>% 
-#   summarise(incidents = n())
-
-# Victim Race:
+# Breakdown of Victim Race:
 victim_race <- df %>% 
   group_by(vic_race) %>% 
   summarise(incidents = n())
@@ -79,9 +71,3 @@ df$occur_time <- as_hms(df$occur_time)
 df$latitude <- as.numeric(df$latitude)
 df$longitude <- as.numeric(df$longitude)
 
-
-df %>% mutate(vic_age_group = ifelse(vic_age_group == "(null)", "UNKNOWN", vic_age_group)) %>% 
-  filter(vic_age_group != "1022") %>% 
-  filter(vic_race == "WHITE") %>% 
-  group_by(vic_age_group) %>% 
-  summarise(incidents = n())
