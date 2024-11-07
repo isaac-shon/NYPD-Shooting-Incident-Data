@@ -27,6 +27,15 @@ function(input, output, session){
            y = "Number of Incidents") +
       theme_minimal()
   })
+  
+  output$bar3 <- renderPlotly({
+    ggplot(victim_race, aes(x = reorder(vic_race, -incidents), y = incidents)) +
+      geom_bar(stat = "identity", fill = "steelblue") +
+      labs(title = "Incident Count by Victim Race",
+           x = "Victim Race",
+           y = "Number of Incidents") +
+      theme_minimal()
+  })
     
   # Histogram of Data:
   output$histogram <- renderPlotly({

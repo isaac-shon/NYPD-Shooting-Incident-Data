@@ -36,7 +36,12 @@ dashboardPage(
                                     h4("Introduction"),
                                     p("This data visualization app is meant to serve as an interactive guide to understanding
                                       shooting incidents in New York City. To see the raw data used in this app, click
-                                      on the 'Raw Data' tab on this page.")
+                                      on the 'Raw Data' tab on this page. Some of the features that this app includes are:"),
+                                    tags$ul(
+                                      tags$li("Data visualizations detailing incident circumstances and victim characteristics"),
+                                      tags$li("Examination of overall activity over time and time of day"),
+                                      tags$li("Interactive maps showing the precise location of each shooting")
+                                    )
                                   )
                                 ),
                                 column(
@@ -44,12 +49,13 @@ dashboardPage(
                                   # Card-like div #2
                                   div(
                                     class = "card",
-                                    style = "border: 1px solid #ddd; padding: 15px; margin: 10px;",
+                                    style = "border: 1px solid #ddd; padding: 15px; margin: 10px; display: flex; flex-direction: column; align-items: center;",
                                     h4("About the Data"),
                                     p("This app makes use of incident-level data collected by the New York Police Department, 
                                        retrieved from NYC OpenData's online API. Each record in the data set represents a 
-                                       specific shooting incident that occured in one of the City's five boroughs. 
-                                       ")
+                                       specific shooting incident that occured between 2006-2023 in one of the City's five boroughs. 
+                                       "),
+                                   tags$img(src="NYCOpenData_Logo.png", width = 250 , height = 75)
                                   )
                                 )
                               )),
@@ -67,9 +73,9 @@ dashboardPage(
                               monthly incidents, there appears to be a sharp increase in shootings in 2020."),
                               plotlyOutput("line_plot")),
                      tabPanel(title = "Location Type of Incident", plotlyOutput("bar1")),
-                     tabPanel(title = "Victim Age Group", plotlyOutput("bar2")),
-                     tabPanel(title = "Time of Day for Each Incident", plotlyOutput("histogram")),
-                     tabPanel(title = "Suspect Age Group", h4("tabpanel 5 placeholder"))
+                     tabPanel(title = "Victim Characteristics", plotlyOutput("bar2"),plotlyOutput("bar3")),
+                     tabPanel(title = "Time of Day for Each Incident", plotlyOutput("histogram"))
+                     
                     )
               ),
       tabItem(tabName = "map",

@@ -61,6 +61,11 @@ victim_age_group <- df %>%
   group_by(vic_age_group) %>% 
   summarise(incidents = n())
 
+# Victim Race:
+victim_race <- df %>% 
+  group_by(vic_race) %>% 
+  summarise(incidents = n())
+
 #-------------------------------------------------------------------------------#
 # Convert occur_time to HMS format:
 df$occur_time <- as_hms(df$occur_time)
